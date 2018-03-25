@@ -3,6 +3,20 @@
 
 #include <stdint-gcc.h>
 
+typedef enum
+{
+	STATE_CMD = 0,
+	STATE_DATA_1,
+	STATE_DATA_2,
+	STATE_CATCHALL
+}MIDI_STATE;
+
+typedef struct 
+{
+	uint8_t cmd;
+	uint8_t data[2];
+}MIDI_EVT;
+
 #define CMD_MSG		0x80
 #define NOTE_ON		(CMD_MSG + 0x00)
 #define NOTE_OFF	(CMD_MSG + 0x10)
