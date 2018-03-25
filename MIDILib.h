@@ -3,6 +3,14 @@
 
 #include <stdint-gcc.h>
 
+#ifndef MIDI_EVT_RX_BUFFER_SIZE
+#define MIDI_EVT_RX_BUFFER_SIZE		32
+#endif
+
+#ifndef MIDI_EVT_TX_BUFFER_SIZE
+#define MIDI_EVT_TX_BUFFER_SIZE		32
+#endif
+
 typedef enum
 {
 	STATE_CMD = 0,

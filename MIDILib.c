@@ -6,6 +6,16 @@ MIDI_STATE l_CurrentState = STATE_CMD;
 
 void (*serial_putc)(uint8_t c);
 
+static void l_PushQ()
+{
+	
+}
+
+static void l_PopQ()
+{
+
+}
+
 void MIDILib_Background(uint8_t c)
 {
 	if(c & CMD_MSG)
@@ -27,4 +37,8 @@ void MIDILib_Background(uint8_t c)
 		case STATE_CATCHALL:
 		break;
 	}
+	
+#ifdef MIDI_PASSTHROUGH
+	serial_putc(c);
+#endif
 }
