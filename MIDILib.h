@@ -31,7 +31,6 @@ typedef struct
 #define POLY_PRES	(CMD_MSG + 0x20)
 #define CTRL_CHNG	(CMD_MSG + 0x30)
 #define PGM_CHNG	(CMD_MSG + 0x40)
-#define CHNL_CHNG	(CMD_MSG + 0x50)
 #define CHNL_PRES	(CMD_MSG + 0x60)
 #define PTCH_BND	(CMD_MSG + 0x70)
 #define SYS_MSG		(CMD_MSG + 0x80)
