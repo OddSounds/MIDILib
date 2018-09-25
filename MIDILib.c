@@ -2,7 +2,8 @@
 
 #include <stdlib.h>
 
-void (*serial_putc)(uint8_t c);
+void (*serial_midithrough_putc)(uint8_t c);
+void (*serial_midiout_putc)(uint8_t c);
 
 void (*l_HandleProgramChange)(uint8_t b1) = NULL;
 void (*l_HandleChannelPressure)(uint8_t b1) = NULL;
@@ -96,6 +97,6 @@ void MIDILib_Background(uint8_t c)
 	}
 	
 #ifdef MIDI_PASSTHROUGH
-	serial_putc(c);
+	serial_midithrough_putc(c);
 #endif
 }
