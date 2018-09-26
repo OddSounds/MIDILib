@@ -107,36 +107,50 @@ void MIDILib_Background(uint8_t c)
 		serial_midithrough_putc(c);
 }
 
+//RegisterProgramChangeCallback
+//Arguments: callback(channel(uint8_t), program(uint8_t))
 void MIDILib_RegisterProgramChangeCallback(void (*callback)(uint8_t, uint8_t))
 {
 	l_HandleProgramChange = callback;
 }
 
+//RegisterChannelPressureCallback
+//Arguments: callback(channel(uint8_t), pressure(uint8_t))
 void MIDILib_RegisterChannelPressureCallback(void (*callback)(uint8_t, uint8_t))
 {
 	l_HandleChannelPressure = callback;
 }
 
+//RegisterNoteOnCallback
+//Arguments: callback(channel(uint8_t), note(uint8_t), velocity(uint8_t))
 void MIDILib_RegisterNoteOnCallback(void (*callback)(uint8_t, uint8_t, uint8_t))
 {
 	l_HandleNoteOn = callback;
 }
 
+//RegisterNoteOffCallback
+//Arguments: callback(channel(uint8_t), note(uint8_t), velocity(uint8_t))
 void MIDILib_RegsiterNoteOffCallback(void (*callback)(uint8_t, uint8_t, uint8_t))
 {
 	l_HandleNoteOff = callback;
 }
 
+//RegisterPolyPressureCallback
+//Arguments: callback(channel(uint8_t), note(uint8_t), pressure(uint8_t))
 void MIDILib_RegisterPolyPressureCallback(void (*callback)(uint8_t, uint8_t, uint8_t))
 {
 	l_HandlePolyPressure = callback;
 }
 
+//RegisterControlChangeCallback
+//Arguments: callback(channel(uint8_t), control(uint8_t), value(uint8_t))
 void MIDILIB_RegisterControlChangeCallback(void (*callback)(uint8_t, uint8_t, uint8_t))
 {
 	l_HandleControlChange = callback;
 }
 
+//RegisterPitchBendCallback
+//Arguments: callback(channel(uint8_t), lsb(uint8_t), msb(uint8_t))
 void MIDILib_RegisterPitchBendCallback(void (*callback)(uint8_t, uint8_t, uint8_t))
 {
 	l_HandlePitchBend = callback;
