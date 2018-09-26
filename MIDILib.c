@@ -106,3 +106,38 @@ void MIDILib_Background(uint8_t c)
 	if(EnablePassthrough && serial_midithrough_putc)
 		serial_midithrough_putc(c);
 }
+
+void MIDILib_RegisterProgramChangeCallback(void (*callback)(uint8_t, uint8_t))
+{
+	l_HandleProgramChange = callback;
+}
+
+void MIDILib_RegisterChannelPressureCallback(void (*callback)(uint8_t, uint8_t))
+{
+	l_HandleChannelPressure = callback;
+}
+
+void MIDILib_RegisterNoteOnCallback(void (*callback)(uint8_t, uint8_t, uint8_t))
+{
+	l_HandleNoteOn = callback;
+}
+
+void MIDILib_RegsiterNoteOffCallback(void (*callback)(uint8_t, uint8_t, uint8_t))
+{
+	l_HandleNoteOff = callback;
+}
+
+void MIDILib_RegisterPolyPressureCallback(void (*callback)(uint8_t, uint8_t, uint8_t))
+{
+	l_HandlePolyPressure = callback;
+}
+
+void MIDILIB_RegisterControlChangeCallback(void (*callback)(uint8_t, uint8_t, uint8_t))
+{
+	l_HandleControlChange = callback;
+}
+
+void MIDILib_RegisterPitchBendCallback(void (*callback)(uint8_t, uint8_t, uint8_t))
+{
+	l_HandlePitchBend = callback;
+}
