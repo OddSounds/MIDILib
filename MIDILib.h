@@ -3,14 +3,6 @@
 
 #include <stdint-gcc.h>
 
-#ifndef MIDI_EVT_RX_BUFFER_SIZE
-#define MIDI_EVT_RX_BUFFER_SIZE		32
-#endif
-
-#ifndef MIDI_EVT_TX_BUFFER_SIZE
-#define MIDI_EVT_TX_BUFFER_SIZE		32
-#endif
-
 typedef enum
 {
 	STATE_CMD = 0,
@@ -19,11 +11,8 @@ typedef enum
 	STATE_CATCHALL
 }MIDI_STATE;
 
-typedef struct 
-{
-	uint8_t cmd;
-	uint8_t data[2];
-}MIDI_EVT;
+#define CHNL_MASK	0x0F
+#define CMD_MASK	0xF0
 
 #define CMD_MSG		0x80
 #define NOTE_ON		(CMD_MSG + 0x00)
@@ -33,8 +22,30 @@ typedef struct
 #define PGM_CHNG	(CMD_MSG + 0x40)
 #define CHNL_PRES	(CMD_MSG + 0x60)
 #define PTCH_BND	(CMD_MSG + 0x70)
-#define SYS_MSG		(CMD_MSG + 0x80)
 
 void MIDILib_Background(uint8_t c);
+
+void MIDILib_RegisterProgramChangeCallback(void (*callback)(uint8_t, uint8_t));
+void MIDILib_RegisterChannelPressureCallback(void (*callback)(uint8_t, uint8_t));
+void MIDILib_RegisterNoteOnCallback(void (*callback)(uint8_t, uint8_t, uint8_t));
+void MIDILib_RegsiterNoteOffCallback(void (*callback)(uint8_t, uint8_t, uint8_t));
+void MIDILib_RegisterPolyPressureCallback(void (*callback)(uint8_t, uint8_t, uint8_t));
+void MIDILIB_RegisterControlChangeCallback(void (*callback)(uint8_t, uint8_t, uint8_t));
+void MIDILib_RegisterPitchBendCallback(void (*callback)(uint8_t, uint8_t, uint8_t));
+
+void MIDILib_SendProgramChange(uint8_t channel, uint8_t program);
+void MIDILib_SendChannelPressure(uint8_t channel, uint8_t pressure);
+void MIDILib_SendNoteOn(uint8_t channel, uint8_t note, uint8_t velocity);
+void MIDILib_SendNoteOff(uint8_t channel, uint8_t note, uint8_t velocity);
+void MIDILib_SendPolyPressure(uint8_t channel, uint8_t note, uint8_t pressure);
+void MIDILib_SendControlChange(uint8_t channel, uint8_t control, uint8_t value);
+void MIDILib_SendPitchBend(uint8_t channel, uint16_t value);
+
+void MIDILib_EnableMIDIPassthrough();
+void MIDILib_DisableMIDIPassthrough();
+
+void MIDILib_AllowChannel(uint8_t channel);
+void MIDILib_BlockChannel(uint8_t channel);
+void MIDILib_SetChannelFilter(uint16_t filter);
 
 #endif /* MIDILIB_H_ */
