@@ -39,7 +39,7 @@ void MIDILib_Background(uint8_t c)
 		break;
 		
 		case STATE_DATA_1:
-		l_DataByte1 = c;
+		l_DataByte1 = c & DATA_MASK;
 		
 		switch(l_CurrentCmd)
 		{
@@ -66,7 +66,7 @@ void MIDILib_Background(uint8_t c)
 		break;
 		
 		case STATE_DATA_2:
-		l_DataByte2 = c;
+		l_DataByte2 = c & DATA_MASK;
 		
 		switch(l_CurrentCmd)
 		{
@@ -154,4 +154,78 @@ void MIDILIB_RegisterControlChangeCallback(void (*callback)(uint8_t, uint8_t, ui
 void MIDILib_RegisterPitchBendCallback(void (*callback)(uint8_t, uint8_t, uint8_t))
 {
 	l_HandlePitchBend = callback;
+}
+
+
+void MIDILib_SendProgramChange(uint8_t channel, uint8_t program)
+{
+	if(serial_midiout_putc)
+	{
+		serial_midiout_putc(PGM_CHNG | (channel & CHNL_MASK));
+		serial_midiout_putc(program & DATA_MASK);
+	}
+}
+
+void MIDILib_SendChannelPressure(uint8_t channel, uint8_t pressure)
+{
+	if(serial_midiout_putc)
+	{
+		serial_midiout_putc(CHNL_PRES | (channel & CHNL_MASK));
+		serial_midiout_putc(pressure & DATA_MASK);	
+	}
+}
+
+void MIDILib_SendNoteOn(uint8_t channel, uint8_t note, uint8_t velocity)
+{
+	if(serial_midiout_putc)
+	{
+		serial_midiout_putc(NOTE_ON | (channel & CHNL_MASK));
+		serial_midiout_putc(note & DATA_MASK);
+		serial_midiout_putc(velocity & DATA_MASK);	
+	}
+}
+
+void MIDILib_SendNoteOff(uint8_t channel, uint8_t note, uint8_t velocity)
+{
+	if(serial_midiout_putc)
+	{
+		serial_midiout_putc(NOTE_ON | (channel & CHNL_MASK));
+		serial_midiout_putc(note & DATA_MASK);
+		serial_midiout_putc(velocity & DATA_MASK);
+	}
+}
+
+void MIDILib_SendPolyPressure(uint8_t channel, uint8_t note, uint8_t pressure)
+{
+	if(serial_midiout_putc)
+	{
+		serial_midiout_putc(NOTE_ON | (channel & CHNL_MASK));
+		serial_midiout_putc(note & DATA_MASK);
+		serial_midiout_putc(pressure & DATA_MASK);
+	}
+}
+
+void MIDILib_SendControlChange(uint8_t channel, uint8_t control, uint8_t value)
+{
+	if(serial_midiout_putc)
+	{
+		serial_midiout_putc(NOTE_ON | (channel & CHNL_MASK));
+		serial_midiout_putc(control & DATA_MASK);
+		serial_midiout_putc(value & DATA_MASK);
+	}
+}
+
+void MIDILib_SendPitchBend(uint8_t channel, uint16_t value)
+{
+	if(serial_midiout_putc)
+	{
+		uint8_t lsb, msb;
+		value >>= 2; //Scale 16 bits to 14
+		lsb = value & 0x7F;
+		msb = (value >> 7) & 0x7F;
+		
+		serial_midiout_putc(NOTE_ON | (channel & CHNL_MASK));
+		serial_midiout_putc(lsb & DATA_MASK);
+		serial_midiout_putc(msb & DATA_MASK);
+	}
 }

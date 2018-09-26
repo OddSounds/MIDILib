@@ -13,6 +13,7 @@ typedef enum
 
 #define CHNL_MASK	0x0F
 #define CMD_MASK	0xF0
+#define DATA_MASK	0x7F
 
 #define CMD_MSG		0x80
 #define NOTE_ON		(CMD_MSG + 0x00)
