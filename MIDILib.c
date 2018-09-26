@@ -18,6 +18,7 @@ void (*l_HandlePolyPressure)(uint8_t channel, uint8_t b1, uint8_t b2) = NULL;
 void (*l_HandleControlChange)(uint8_t channel, uint8_t b1, uint8_t b2) = NULL;
 void (*l_HandlePitchBend)(uint8_t channel, uint8_t b1, uint8_t b2) = NULL;
 
+
 void MIDILib_Background(uint8_t c)
 {
 	static uint8_t l_CurrentCmd = 0x00;
@@ -106,6 +107,7 @@ void MIDILib_Background(uint8_t c)
 	if(EnablePassthrough && serial_midithrough_putc)
 		serial_midithrough_putc(c);
 }
+
 
 //RegisterProgramChangeCallback
 //Arguments: callback(channel(uint8_t), program(uint8_t))
@@ -228,4 +230,31 @@ void MIDILib_SendPitchBend(uint8_t channel, uint16_t value)
 		serial_midiout_putc(lsb & DATA_MASK);
 		serial_midiout_putc(msb & DATA_MASK);
 	}
+}
+
+
+void MIDILib_EnableMIDIPassthrough()
+{
+	EnablePassthrough = 1;
+}
+
+void MIDILib_DisableMIDIPassthrough()
+{
+	EnablePassthrough = 0;
+}
+
+
+void MIDILib_AllowChannel(uint8_t channel)
+{
+	ChannelFilter |= (1 << channel);
+}
+
+void MIDILib_BlockChannel(uint8_t channel)
+{
+	ChannelFilter &= ~(1 << channel);
+}
+
+void MIDILib_SetChannelFilter(uint16_t filter)
+{
+	ChannelFilter = filter;
 }
