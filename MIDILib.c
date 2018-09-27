@@ -109,6 +109,17 @@ void MIDILib_Background(uint8_t c)
 }
 
 
+void MIDILib_RegisterMIDIThrough(void (*midithrough)(uint8_t))
+{
+	serial_midithrough_putc = midithrough;
+}
+
+void MIDILib_RegisterMIDIOut(void (*midiout)(uint8_t))
+{
+	serial_midiout_putc = midiout;
+}
+
+
 //RegisterProgramChangeCallback
 //Arguments: callback(channel(uint8_t), program(uint8_t))
 void MIDILib_RegisterProgramChangeCallback(void (*callback)(uint8_t, uint8_t))

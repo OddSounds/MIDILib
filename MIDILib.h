@@ -26,6 +26,9 @@ typedef enum
 
 void MIDILib_Background(uint8_t c);
 
+void MIDILib_RegisterMIDIThrough(void (*midithrough)(uint8_t));
+void MIDILib_RegisterMIDIOut(void (*midiout)(uint8_t));
+
 void MIDILib_RegisterProgramChangeCallback(void (*callback)(uint8_t, uint8_t));
 void MIDILib_RegisterChannelPressureCallback(void (*callback)(uint8_t, uint8_t));
 void MIDILib_RegisterNoteOnCallback(void (*callback)(uint8_t, uint8_t, uint8_t));
